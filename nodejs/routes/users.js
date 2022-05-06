@@ -19,7 +19,8 @@ router.get("/", async (req, res) => {
         const sort = req.query.sort || '-createdAt'
         const skip = (page - 1) * per_page;
         const user = await User.find().limit(per_page).skip(skip).sort(sort);
-        const total = user.length;
+        const totalUser = await User.find();
+        const total = totalUser.length;
         const total_pages = Math.ceil(total / per_page)
         res.send({ page: page, per_page: per_page, total: total, total_pages: total_pages, data: user, });
     } catch (err) {
