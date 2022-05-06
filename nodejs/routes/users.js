@@ -15,11 +15,13 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
     try {
         const page = req.query.page * 1 || 1;
-        const limit = req.query.limit * 1 || 5;
-        const start = limit * (page - 1);
+        const per_page = 5;
         const sort = req.query.sort || '-createdAt'
-        const user = await User.find().limit(limit).skip(start).sort(sort);
-        res.send(user);
+        const skip = (page - 1) * per_page;
+        const user = await User.find().limit(per_page).skip(skip).sort(sort);
+        const total = user.length;
+        const total_pages = Math.ceil(total / per_page)
+        res.send({ page: page, per_page: per_page, total: total, total_pages: total_pages, data: user, });
     } catch (err) {
         res.send(err);
     }
