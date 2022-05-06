@@ -12,7 +12,7 @@ const axiosClient = axios.create({
 axiosClient.interceptors.response.use(
     function (response) {
         // Do something before request is sent
-        return response;
+        return response.data;
     },
     function (error) {
         // Do something with request error
