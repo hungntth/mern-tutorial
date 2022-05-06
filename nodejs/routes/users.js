@@ -25,6 +25,15 @@ router.get("/", async (req, res) => {
     }
 });
 
+router.get("/count", async (req, res) => {
+    try {
+        const countUser = await User.find()
+        res.json(countUser.length);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
 
 
 module.exports = router;
