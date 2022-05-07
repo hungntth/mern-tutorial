@@ -1,18 +1,33 @@
 import React, { useState } from 'react';
-import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import { toast } from 'react-toastify';
+import { postCreateUser } from '../api/UserApi';
 
 ModalAddNew.propTypes = {
 
 };
 
 function ModalAddNew(props) {
-    const { handleClose, show } = props;
+    const { handleClose, show, handleUpdateTable } = props;
     const [email, setEmail] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const handleSaveUser = () => {
-        console.log(email, firstName, lastName)
+    const handleSaveUser = async () => {
+        const body = {
+            email: email,
+            first_name: firstName,
+            last_name: lastName
+        }
+        let res = await postCreateUser(body);
+        console.log(res)
+        handleClose();
+        setEmail('');
+        setFirstName('');
+        setLastName('');
+        toast.success("Created succeed!");
+        handleUpdateTable();
+
     }
     return (
         <>

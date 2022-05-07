@@ -1,34 +1,36 @@
+import { useState } from "react";
+import Container from 'react-bootstrap/Container';
+import { ToastContainer } from 'react-toastify';
 import "./App.scss";
 import Header from "./components/Header";
-import TableUser from "./components/TableUser";
-import Container from 'react-bootstrap/Container'
 import ModalAddNew from "./components/ModalAddNew";
-import { useState } from "react";
+import TableUser from "./components/TableUser";
 
 function App() {
-  const [isShowModalAddNew, setIsShowModalAddNew] = useState(false);
-  const handleShow = () => {
-    setIsShowModalAddNew(true)
-  }
-  const handleClose = () => {
-    setIsShowModalAddNew(false)
-  }
-  return (
-    <div className="app-container">
-      <Header />
-      <Container>
-        <div className="my-3 add-new">
-          <span>List User:</span>
-          <button className="btn btn-primary" onClick={handleShow}>Add new user</button>
-        </div>
-        <TableUser />
-      </Container>
 
-      <ModalAddNew
-        show={isShowModalAddNew}
-        handleClose={handleClose}
+  return (
+    <>
+      <div className="app-container">
+        <Header />
+        <Container>
+
+          <TableUser />
+        </Container>
+
+      </div>
+
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
       />
-    </div>
+    </>
   );
 }
 
