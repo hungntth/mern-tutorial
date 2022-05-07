@@ -28,10 +28,20 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.get("/count", async (req, res) => {
+
+router.put("/:id", async (req, res) => {
     try {
-        const countUser = await User.find()
-        res.json(countUser.length);
+        const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body);
+        res.send(user);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+router.delete("/:id", async (req, res) => {
+    try {
+        const user = await User.findByIdAndDelete(req.params.id);
+        res.send(user);
     } catch (err) {
         res.send(err);
     }

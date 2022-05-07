@@ -1,15 +1,14 @@
-import { useState } from "react";
 import Container from 'react-bootstrap/Container';
 import { ToastContainer } from 'react-toastify';
 import "./App.scss";
 import Header from "./components/Header";
-import ModalAddNew from "./components/ModalAddNew";
 import TableUser from "./components/TableUser";
 
 function App() {
 
   return (
     <>
+
       <div className="app-container">
         <Header />
         <Container>

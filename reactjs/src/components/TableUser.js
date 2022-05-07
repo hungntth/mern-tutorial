@@ -3,14 +3,8 @@ import Table from 'react-bootstrap/Table';
 import { fetchAllUser } from '../api/UserApi';
 import ReactPaginate from 'react-paginate';
 import ModalAddNew from './ModalAddNew';
-
-
-TableUser.propTypes = {
-
-};
-
-
-
+import ModalEditUser from './ModalEditUser';
+import ModalDelete from './ModalDelete';
 function TableUser(props) {
     const [userList, setUserList] = useState([]);
     const [totalUsers, setTotalUsers] = useState(0);
@@ -37,11 +31,24 @@ function TableUser(props) {
         getUsers(+event.selected + 1);
     }
     const [isShowModalAddNew, setIsShowModalAddNew] = useState(false);
+    const [isShowModalEditUser, setIsShowModalEditUser] = useState(false);
+    const [isShowModalDelete, setIsShowModalDelete] = useState(false);
+    const [dataUserEdit, setDataUserEdit] = useState({})
     const handleClose = () => {
         setIsShowModalAddNew(false)
+        setIsShowModalEditUser(false)
+        setIsShowModalDelete(false)
     }
     const handleShow = () => {
         setIsShowModalAddNew(true)
+    }
+    const handleUpdateShow = (item) => {
+        setIsShowModalEditUser(true);
+        setDataUserEdit(item);
+    }
+    const handleDeleteShow = (item) => {
+        setIsShowModalDelete(true);
+        setDataUserEdit(item);
     }
 
     return (
@@ -50,12 +57,13 @@ function TableUser(props) {
                 <span>List User:</span>
                 <button className="btn btn-primary" onClick={handleShow}>Add new user</button>
             </div>
-            <Table striped bordered hover>
+            <Table bordered hover>
                 <thead>
                     <tr>
                         <th>Email</th>
                         <th>Last Name</th>
                         <th>First Name</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,6 +73,10 @@ function TableUser(props) {
                                 <td>{item.email}</td>
                                 <td>{item.first_name}</td>
                                 <td>{item.last_name}</td>
+                                <td>
+                                    <button className="btn btn-warning mx-3 my-2" onClick={() => handleUpdateShow(item)}>Edit</button>
+                                    <button className="btn btn-danger" onClick={() => handleDeleteShow(item)}>Delete</button>
+                                </td>
                             </tr>
                         )
                     })}
@@ -92,6 +104,20 @@ function TableUser(props) {
             />
             <ModalAddNew
                 show={isShowModalAddNew}
+                handleClose={handleClose}
+                handleUpdateTable={handleUpdateTable}
+            />
+            <ModalEditUser
+                show={isShowModalEditUser}
+                handleClose={handleClose}
+                dataUserEdit={dataUserEdit}
+                handleUpdateTable={handleUpdateTable}
+
+            />
+
+            <ModalDelete
+                show={isShowModalDelete}
+                dataUserEdit={dataUserEdit}
                 handleClose={handleClose}
                 handleUpdateTable={handleUpdateTable}
             />
