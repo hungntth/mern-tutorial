@@ -18,11 +18,11 @@ function TableUser(props) {
     const [sortField, setSortField] = useState("-createdAt");
     const [page, setPage] = useState("");
     const [keyword, setKeyWord] = useState("");
-    const history = useHistory();
+    // const history = useHistory();
 
     useEffect(() => {
         getUsers(page, sortField, keyword);
-        history.push(`?page=${page}&sort=${sortField}&search=${keyword}`);
+        // history.push(`?page=${page}&sort=${sortField}&search=${keyword}`);
 
     }, [page, sortField, keyword]);
 

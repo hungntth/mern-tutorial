@@ -23,13 +23,16 @@ function Register(props) {
         setLoading(true);
         let res = await registerApi(email, password);
         if (res && res.token) {
-            localStorage.setItem("token", res.token);
+
             toast.success("Register succeed!");
             history.push("/")
         } else {
             toast.error(res.data);
         }
         setLoading(false);
+    }
+    const handleGoBack = () => {
+        history.push("/")
     }
     return (
         <>
@@ -66,8 +69,8 @@ function Register(props) {
                     {loading && <i class="fas fa-cog fa-spin"></i>}
                     Login
                 </button>
-                <div className="back">
-                    <i className="fa-solid fa-angle-left"></i> Go back
+                <div className="back" onClick={() => handleGoBack()}>
+                    <i className="fa-solid fa-angle-left"></i> Go Back
                 </div>
             </div>
         </>

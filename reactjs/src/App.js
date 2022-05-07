@@ -1,3 +1,4 @@
+import { useContext, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -7,8 +8,16 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
 import TableUser from "./components/TableUser";
+import { UserContext } from './context/UserContext';
 
 function App() {
+  const { user, loginContext } = useContext(UserContext);
+  console.log(user)
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      loginContext(localStorage.getItem("email"), localStorage.getItem("token"))
+    }
+  }, [])
 
   return (
     <>
