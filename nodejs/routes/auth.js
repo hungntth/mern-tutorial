@@ -6,6 +6,11 @@ const jwt = require("jsonwebtoken")
 
 router.post("/register", async (req, res) => {
     try {
+        const acc = await Account.findOne({ email: req.body.email });
+        if (acc) {
+            res.status(401).json("Account already exists");
+            return;
+        }
         const newAccount = await new Account({
             email: req.body.email,
             password: CryptoJS.AES.encrypt(req.body.password, process.env.SECRET_KEY).toString(),

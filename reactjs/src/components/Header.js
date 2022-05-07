@@ -3,10 +3,17 @@ import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import logoApp from "../assets/images/logo192.png";
-import { useLocation, NavLink } from "react-router-dom";
+import { useLocation, NavLink, useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Header = (props) => {
     const location = useLocation();
+    const history = useHistory();
+    const handleLogout = () => {
+        localStorage.removeItem("token")
+        history.push("/")
+        toast.success("Log out success!")
+    }
     return (
         <>
             <Navbar bg="light" expand="lg">
@@ -37,8 +44,7 @@ const Header = (props) => {
                             <NavDropdown title="Setting" className="" id="basic-nav-dropdown">
                                 <NavDropdown.Item href="/login">Login</NavDropdown.Item>
                                 <NavDropdown.Item href="/register">Register</NavDropdown.Item>
-
-                                <NavDropdown.Item href="">Logout</NavDropdown.Item>
+                                <NavDropdown.Item onClick={() => handleLogout()}>Logout</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                     </Navbar.Collapse>
