@@ -16,7 +16,7 @@ function EditUser(props) {
             first_name: firstName,
             last_name: lastName,
         };
-        let res = await putUpdateUser(dataUserEdit._id, body);
+        await putUpdateUser(dataUserEdit._id, body);
         handleClose();
         setEmail("");
         setFirstName("");
@@ -26,7 +26,6 @@ function EditUser(props) {
     };
     useEffect(() => {
         if (show) {
-            console.log(dataUserEdit._id);
             setEmail(dataUserEdit.email);
             setFirstName(dataUserEdit.first_name);
             setLastName(dataUserEdit.last_name);

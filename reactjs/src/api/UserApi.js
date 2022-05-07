@@ -1,7 +1,7 @@
 import axiosClient from './axios';
 
-const fetchAllUser = (page) => {
-    const url = `/users?page=${page}`;
+const fetchAllUser = (page, sort) => {
+    const url = `/users?page=${page}&sort=${sort}`;
     return axiosClient.get(url);
 
 }

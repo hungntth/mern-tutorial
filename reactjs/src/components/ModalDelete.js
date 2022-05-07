@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { toast } from "react-toastify";
 import { deleteUser } from "../api/UserApi";
 
 
@@ -10,10 +11,10 @@ function ModalDelete(props) {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const confirmDelete = async () => {
-        let res = await deleteUser(dataUserEdit._id)
+        await deleteUser(dataUserEdit._id)
         handleClose();
         handleUpdateTable();
-        console.log(res)
+        toast.success("Delete succeed!");
     }
     useEffect(() => {
 
