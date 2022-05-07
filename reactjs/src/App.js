@@ -1,7 +1,9 @@
 import Container from 'react-bootstrap/Container';
+import { Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import "./App.scss";
 import Header from "./components/Header";
+import Home from './components/Home';
 import TableUser from "./components/TableUser";
 
 function App() {
@@ -12,8 +14,10 @@ function App() {
       <div className="app-container">
         <Header />
         <Container>
-
-          <TableUser />
+          <Switch>
+            <Route path="/" component={Home} exact />
+            <Route path="/users" component={TableUser} exact />
+          </Switch>
         </Container>
 
       </div>

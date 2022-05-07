@@ -13,19 +13,51 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-    try {
-        const page = req.query.page * 1 || 1;
-        const per_page = 5;
-        const sort = req.query.sort || '-createdAt'
-        const skip = (page - 1) * per_page;
-        const user = await User.find().limit(per_page).skip(skip).sort(sort);
-        const totalUser = await User.find();
-        const total = totalUser.length;
-        const total_pages = Math.ceil(total / per_page)
-        res.send({ page: page, per_page: per_page, total: total, total_pages: total_pages, data: user, });
-    } catch (err) {
-        res.send(err);
+    const search = req.query.search || undefined;
+    if (search === undefined) {
+        try {
+
+            const page = req.query.page * 1 || 1;
+            const per_page = 5;
+            const sort = req.query.sort || '-createdAt'
+            const skip = (page - 1) * per_page;
+            const user = await User.find().limit(per_page).skip(skip).sort(sort);
+            const totalUser = await User.find();
+            const total = totalUser.length;
+            const total_pages = Math.ceil(total / per_page)
+            res.send({ page: page, per_page: per_page, total: total, total_pages: total_pages, data: user, });
+        } catch (err) {
+            res.send(err);
+        }
+    } else {
+        try {
+            const search = req.query.search
+            const page = req.query.page * 1 || 1;
+            const per_page = 5;
+            const sort = req.query.sort || '-createdAt'
+            const skip = (page - 1) * per_page;
+            const user = await User.find(
+                {
+                    "$or": [
+                        { email: { $regex: search }, },
+                    ]
+                }
+            ).limit(per_page).skip(skip).sort(sort);
+            const totalUser = await User.find(
+                {
+                    "$or": [
+                        { email: { $regex: search }, },
+                    ]
+                }
+            );
+            const total = totalUser.length;
+            const total_pages = Math.ceil(total / per_page)
+            res.send({ page: page, per_page: per_page, total: total, total_pages: total_pages, data: user, });
+        } catch (err) {
+            res.send(err);
+        }
     }
+
 });
 
 
@@ -46,6 +78,7 @@ router.delete("/:id", async (req, res) => {
         res.send(err);
     }
 });
+
 
 
 

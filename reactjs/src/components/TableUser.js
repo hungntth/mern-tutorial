@@ -15,22 +15,24 @@ function TableUser(props) {
     const [isShowModalEditUser, setIsShowModalEditUser] = useState(false);
     const [isShowModalDelete, setIsShowModalDelete] = useState(false);
     const [dataUserEdit, setDataUserEdit] = useState({});
-    const [sortField, setSortField] = useState('-createdAt');
-    const [page, setPage] = useState('')
+    const [sortField, setSortField] = useState("-createdAt");
+    const [page, setPage] = useState("");
+    const [keyword, setKeyWord] = useState("");
     const history = useHistory();
 
     useEffect(() => {
-        getUsers(page, sortField);
-        history.push(`?page=${page}&sort=${sortField}`)
-    }, [page, sortField]);
+        getUsers(page, sortField, keyword);
+        history.push(`?page=${page}&sort=${sortField}&search=${keyword}`);
 
-    const getUsers = async (page, sort) => {
-        let res = await fetchAllUser(page, sort);
+    }, [page, sortField, keyword]);
+
+    const getUsers = async (page, sort, keyword) => {
+        let res = await fetchAllUser(page, sort, keyword);
         if (res && res.data) {
             setUserList(res.data);
             setTotalUsers(res.total);
             setTotalPages(res.total_pages);
-            setPage(res.page)
+            setPage(res.page);
         }
 
     };
@@ -39,8 +41,8 @@ function TableUser(props) {
     };
     const handlePageClick = (event) => {
         getUsers(+event.selected + 1, sortField);
-        setPage(+event.selected + 1)
-        console.log(sortField)
+        setPage(+event.selected + 1);
+        console.log(sortField);
     };
 
     const handleClose = () => {
@@ -60,11 +62,15 @@ function TableUser(props) {
         setDataUserEdit(item);
     };
     const handleSort = (sort) => {
-        getUsers(1, sort)
-        setSortField(sort)
+        setSortField(sort);
 
-    }
 
+    };
+
+    const handleSearch = (event) => {
+        setKeyWord(event.target.value);
+
+    };
 
     return (
         <>
@@ -74,6 +80,14 @@ function TableUser(props) {
                     Add new user
                 </button>
             </div>
+            <div className="col-4 my-3">
+                <input
+                    className="form-control"
+                    placeholder="Search user by email..."
+                    defaultValue={keyword}
+                    onChange={(event) => handleSearch(event)}
+                />
+            </div>
             <Table bordered hover>
                 <thead>
                     <tr>
@@ -81,11 +95,13 @@ function TableUser(props) {
                             <div className="sort-header">
                                 <span>Email</span>
                                 <span>
-                                    <i className="fa-solid fa-arrow-down"
-                                        onClick={() => handleSort('email')}
+                                    <i
+                                        className="fa-solid fa-arrow-down"
+                                        onClick={() => handleSort("email")}
                                     ></i>
-                                    <i className="fa-solid fa-arrow-up"
-                                        onClick={() => handleSort('-email')}
+                                    <i
+                                        className="fa-solid fa-arrow-up"
+                                        onClick={() => handleSort("-email")}
                                     ></i>
                                 </span>
                             </div>
@@ -94,11 +110,13 @@ function TableUser(props) {
                             <div className="sort-header">
                                 <span>Last Name</span>
                                 <span>
-                                    <i className="fa-solid fa-arrow-down"
-                                        onClick={() => handleSort('last_name')}
+                                    <i
+                                        className="fa-solid fa-arrow-down"
+                                        onClick={() => handleSort("last_name")}
                                     ></i>
-                                    <i className="fa-solid fa-arrow-up"
-                                        onClick={() => handleSort('-last_name')}
+                                    <i
+                                        className="fa-solid fa-arrow-up"
+                                        onClick={() => handleSort("-last_name")}
                                     ></i>
                                 </span>
                             </div>
@@ -107,18 +125,19 @@ function TableUser(props) {
                             <div className="sort-header">
                                 <span>First Name</span>
                                 <span>
-                                    <i className="fa-solid fa-arrow-down"
-                                        onClick={() => handleSort('first_name')}
+                                    <i
+                                        className="fa-solid fa-arrow-down"
+                                        onClick={() => handleSort("first_name")}
                                     ></i>
-                                    <i className="fa-solid fa-arrow-up"
-                                        onClick={() => handleSort('-first_name')}
+                                    <i
+                                        className="fa-solid fa-arrow-up"
+                                        onClick={() => handleSort("-first_name")}
                                     ></i>
                                 </span>
                             </div>
                         </th>
-                        <th >
+                        <th>
                             <div className="action-header">Actions</div>
-
                         </th>
                     </tr>
                 </thead>
@@ -132,18 +151,20 @@ function TableUser(props) {
                                     <td>{item.last_name}</td>
                                     <td>{item.first_name}</td>
                                     <td>
-                                        <div className="action-header"><button
-                                            className="btn btn-warning mx-3 my-2"
-                                            onClick={() => handleUpdateShow(item)}
-                                        >
-                                            Edit
-                                        </button>
+                                        <div className="action-header">
+                                            <button
+                                                className="btn btn-warning mx-3 my-2"
+                                                onClick={() => handleUpdateShow(item)}
+                                            >
+                                                Edit
+                                            </button>
                                             <button
                                                 className="btn btn-danger"
                                                 onClick={() => handleDeleteShow(item)}
                                             >
                                                 Delete
-                                            </button></div>
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             );

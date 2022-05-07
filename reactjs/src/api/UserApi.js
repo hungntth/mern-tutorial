@@ -1,7 +1,7 @@
 import axiosClient from './axios';
 
-const fetchAllUser = (page, sort) => {
-    const url = `/users?page=${page}&sort=${sort}`;
+const fetchAllUser = (page, sort, keyword) => {
+    const url = `/users?page=${page}&sort=${sort}&search=${keyword}`;
     return axiosClient.get(url);
 
 }
@@ -20,6 +20,8 @@ const deleteUser = (id) => {
     const url = `/users/${id}`;
     return axiosClient.delete(url);
 }
+
+
 
 
 export { fetchAllUser, postCreateUser, putUpdateUser, deleteUser }
