@@ -1,22 +1,28 @@
-import { useContext } from "react";
+import { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import logoApp from "../assets/images/logo192.png";
-import { UserContext } from "../context/UserContext";
+import { handleLogoutRedux } from "../redux/actions/userAction";
 
 const Header = (props) => {
     const history = useHistory();
-    const { user, logout } = useContext(UserContext);
 
+    const user = useSelector(state => state.user.account)
+    const dispatch = useDispatch();
     const handleLogout = () => {
-        logout();
-        history.push("/");
-        toast.success("Log out success!");
+        dispatch(handleLogoutRedux());
     };
+    useEffect(() => {
+        if (user && user.auth === false && window.location.pathname !== '/login') {
+            history.push("/");
+            toast.success("Log out succes!")
+        }
+    }, [user])
     return (
         <>
             <Navbar bg="light" expand="lg">
@@ -47,7 +53,7 @@ const Header = (props) => {
 
                                 <Nav>
                                     {user && user.auth === true ? (
-                                        <NavDropdown title={user.user}>
+                                        <NavDropdown title={user.email}>
                                             <NavDropdown.Item onClick={() => handleLogout()}>
                                                 Logout
                                             </NavDropdown.Item>

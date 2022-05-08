@@ -59,7 +59,7 @@ function Register(props) {
                 />
                 <button
                     className={
-                        email && password && password === retypePassword && !loading ? "active" : ""
+                        email && password && password === retypePassword ? "active" : ""
                     }
                     disabled={
                         email && password && password === retypePassword && !loading ? false : true

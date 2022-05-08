@@ -1,40 +1,29 @@
-import React, { useContext, useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { loginApi } from "../api/AuthApi";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { UserContext } from "../context/UserContext";
+import { toast } from "react-toastify";
+import { handleLogionRedux } from "../redux/actions/userAction";
 
 function Login(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
     const history = useHistory();
-    const { loginContext } = useContext(UserContext);
-    // useEffect(() => {
-    //     let token = localStorage.getItem("token");
-    //     if (token) {
-    //         history.push("/")
-    //     }
-    // }, [])
-    const handleLogion = async () => {
-        if (!email || !password) {
-            toast.error("Email/Password wrong!");
-            return;
-        }
-        setLoading(true);
-        let res = await loginApi(email, password);
-        if (res && res.token) {
-            loginContext(email, res.token);
-            toast.success("Login succeed!");
+    const dispatch = useDispatch();
+    const isLoading = useSelector(state => state.user.isLoading);
+    const account = useSelector(state => state.user.account);
+
+    useEffect(() => {
+        if (account && account.auth === true) {
             history.push("/");
-        } else {
-            toast.error(res.data);
         }
-        setLoading(false);
+    }, [account])
+
+    const handleLogion = async () => {
+        dispatch(handleLogionRedux(email, password));
     };
     const handleGoBack = () => {
-        history.push("/")
-    }
+        history.push("/");
+    };
 
     return (
         <>
@@ -54,11 +43,11 @@ function Login(props) {
                     onChange={(event) => setPassword(event.target.value)}
                 />
                 <button
-                    className={email && password && !loading ? "active" : ""}
-                    disabled={email && password && !loading ? false : true}
+                    className={email && password ? "active" : ""}
+                    disabled={email && password && !isLoading ? false : true}
                     onClick={() => handleLogion()}
                 >
-                    {loading && <i className="fas fa-cog fa-spin"></i>}
+                    {isLoading && <i className="fas fa-cog fa-spin"></i>}
                     Login
                 </button>
                 <div className="back" onClick={() => handleGoBack()}>
