@@ -8,7 +8,7 @@ import AppRoutes from './routes/AppRoutes';
 
 function App() {
   const { user, loginContext } = useContext(UserContext);
-  console.log(user)
+  console.log(user.user)
   useEffect(() => {
     if (localStorage.getItem("token")) {
       loginContext(localStorage.getItem("email"), localStorage.getItem("token"))

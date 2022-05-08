@@ -58,7 +58,7 @@ function Login(props) {
                     disabled={email && password && !loading ? false : true}
                     onClick={() => handleLogion()}
                 >
-                    {loading && <i class="fas fa-cog fa-spin"></i>}
+                    {loading && <i className="fas fa-cog fa-spin"></i>}
                     Login
                 </button>
                 <div className="back" onClick={() => handleGoBack()}>

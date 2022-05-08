@@ -33,7 +33,7 @@ const Header = (props) => {
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
-                        {(user && user.auth || window.location.pathname === '/') &&
+                        {
                             <>
                                 <Nav className="me-auto">
                                     <NavLink className="nav-link" to="/" exact>
@@ -46,21 +46,20 @@ const Header = (props) => {
                                 </Nav>
 
                                 <Nav>
-                                    <NavDropdown title="Setting" >
-                                        {user && user.auth === true
-
-                                            ?
+                                    {user && user.auth === true ? (
+                                        <NavDropdown title={user.user}>
                                             <NavDropdown.Item onClick={() => handleLogout()}>
                                                 Logout
                                             </NavDropdown.Item>
-                                            :
-
-                                            <>
-                                                <NavDropdown.Item href="/login">Login</NavDropdown.Item>
-                                                <NavDropdown.Item href="/register">Register</NavDropdown.Item>
-                                            </>
-                                        }
-                                    </NavDropdown>
+                                        </NavDropdown>
+                                    ) : (
+                                        <NavDropdown title="Setting">
+                                            <NavDropdown.Item href="/login">Login</NavDropdown.Item>
+                                            <NavDropdown.Item href="/register">
+                                                Register
+                                            </NavDropdown.Item>
+                                        </NavDropdown>
+                                    )}
                                 </Nav>
                             </>
                         }
