@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import ReactPaginate from "react-paginate";
-import { useHistory } from "react-router-dom";
 import { fetchAllUser } from "../api/UserApi";
 import ModalAddNew from "./ModalAddNew";
 import ModalDelete from "./ModalDelete";
@@ -151,15 +150,15 @@ function TableUser(props) {
                                     <td>{item.last_name}</td>
                                     <td>{item.first_name}</td>
                                     <td>
-                                        <div className="action-header">
+                                        <div >
                                             <button
-                                                className="btn btn-warning mx-3 my-2"
+                                                className="btn btn-warning mx-3 action-button"
                                                 onClick={() => handleUpdateShow(item)}
                                             >
                                                 Edit
                                             </button>
                                             <button
-                                                className="btn btn-danger"
+                                                className="btn btn-danger action-button"
                                                 onClick={() => handleDeleteShow(item)}
                                             >
                                                 Delete

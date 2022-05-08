@@ -58,6 +58,9 @@ code {
       color: white;
     }
   }
+  .action-button{
+    margin-top: 0px;
+  }
 
   button[disabled=disabled], button:disabled {
     // your css rules
@@ -83,3 +86,4 @@ code {
 .action-header{
   text-align: center;
 }
+

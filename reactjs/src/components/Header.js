@@ -1,15 +1,14 @@
+import { useContext } from "react";
+import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import Container from "react-bootstrap/Container";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import logoApp from "../assets/images/logo192.png";
-import { useLocation, NavLink, useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useContext, useEffect, useState } from "react";
+import logoApp from "../assets/images/logo192.png";
 import { UserContext } from "../context/UserContext";
 
 const Header = (props) => {
-    const location = useLocation();
     const history = useHistory();
     const { user, logout } = useContext(UserContext);
 
