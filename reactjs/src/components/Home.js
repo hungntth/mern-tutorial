@@ -27,11 +27,11 @@ function Home(props) {
                         <li>Sửa user</li>
                         <li>Xóa user</li>
                     </ol>
-                    <p><b>Website:</b></p>
-                    <p><b>Github:</b></p>
+                    <p><b>Website:</b><a className="github" href="http://58.187.221.57:5000/" target="_blank">http://58.187.221.57:5000/</a></p>
+                    <p><b>Github:</b> <a className="github" href="https://github.com/hungntth/mern-tutorial/tree/main/nodejs" target="_blank">https://github.com/hungntth/mern-tutorial/tree/main/nodejs</a></p>
                     <p>- Dùng thư viện React tạo một website sử dụng API!</p>
-                    <p><b>Website:</b></p>
-                    <p><b>Github:</b></p>
+                    <p><b>Website:</b><a className="github" href="http://58.187.221.57:3000/" target="_blank">http://58.187.221.57:3000/</a></p>
+                    <p><b>Github:</b> <a className="github" href="https://github.com/hungntth/mern-tutorial/tree/main/reactjs" target="_blank">https://github.com/hungntth/mern-tutorial/tree/main/reactjs</a></p>
                 </div>
             </Container>
         </>
