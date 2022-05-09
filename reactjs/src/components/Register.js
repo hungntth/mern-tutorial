@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { toast } from "react-toastify";
-import { registerApi } from "../api/AuthApi";
 import { handleRegisterRedux } from "../redux/actions/userAction";
 
 function Register(props) {
@@ -25,11 +23,13 @@ function Register(props) {
     const handleGoBack = () => {
         history.push("/")
     }
+    const handleChangePage = () => {
+        history.push("/login");
+    }
     return (
         <>
             <div className="login-container col-12 col-sm-4">
-                <div className="title">Log in</div>
-                <div className="text">Email</div>
+                <div className="title">Register</div>
                 <input
                     type="email"
                     placeholder="Email..."
@@ -58,11 +58,17 @@ function Register(props) {
                     onClick={() => handlRegister()}
                 >
                     {isLoading && <i class="fas fa-cog fa-spin"></i>}
-                    Login
+                    Register now
                 </button>
                 <div className="back" onClick={() => handleGoBack()}>
                     <i className="fa-solid fa-angle-left"></i> Go Back
                 </div>
+                <button
+                    className="register-login"
+                    onClick={() => handleChangePage()}
+                >
+                    Login
+                </button>
             </div>
         </>
     );

@@ -21,7 +21,7 @@ export const handleRegisterRedux = (email, password) => {
                     data: { email: email, token: res.token },
                 })
             );
-            toast.success("Login success!")
+            toast.success("Register success!")
         } else {
             toast.error(res.data);
             dispatch({ type: FETCH_USER_ERROR });

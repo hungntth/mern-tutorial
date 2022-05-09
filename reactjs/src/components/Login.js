@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { toast } from "react-toastify";
 import { handleLogionRedux } from "../redux/actions/userAction";
 
 function Login(props) {
@@ -15,6 +14,7 @@ function Login(props) {
     useEffect(() => {
         if (account && account.auth === true) {
             history.push("/");
+
         }
     }, [account])
 
@@ -24,12 +24,14 @@ function Login(props) {
     const handleGoBack = () => {
         history.push("/");
     };
+    const handleChangePage = () => {
+        history.push("/register");
+    }
 
     return (
         <>
             <div className="login-container col-12 col-sm-4">
-                <div className="title">Log in</div>
-                <div className="text">Email</div>
+                <div className="title">Login</div>
                 <input
                     type="text"
                     placeholder="Email..."
@@ -48,11 +50,17 @@ function Login(props) {
                     onClick={() => handleLogion()}
                 >
                     {isLoading && <i className="fas fa-cog fa-spin"></i>}
-                    Login
+                    Login now
                 </button>
                 <div className="back" onClick={() => handleGoBack()}>
                     <i className="fa-solid fa-angle-left"></i> Go Back
                 </div>
+                <button
+                    className="register-login"
+                    onClick={() => handleChangePage()}
+                >
+                    Register a new account
+                </button>
             </div>
         </>
     );
