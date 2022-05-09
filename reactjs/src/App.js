@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import "./App.scss";
 import Header from "./components/Header";
@@ -9,9 +9,6 @@ import AppRoutes from './routes/AppRoutes';
 
 function App() {
   const dispatch = useDispatch();
-  const dataUserRedux = useSelector(state => state.user.account);
-
-  console.log(dataUserRedux)
 
 
   useEffect(() => {
