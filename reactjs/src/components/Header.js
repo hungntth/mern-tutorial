@@ -18,7 +18,7 @@ const Header = (props) => {
         dispatch(handleLogoutRedux());
     };
     useEffect(() => {
-        if (user && user.auth === false && window.location.pathname !== '/login') {
+        if (user && user.auth === false && window.location.pathname !== '/login' && window.location.pathname !== '/register') {
             history.push("/");
             toast.success("Log out succes!")
         }

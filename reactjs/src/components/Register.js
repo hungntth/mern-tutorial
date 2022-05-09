@@ -1,35 +1,26 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { registerApi } from "../api/AuthApi";
+import { handleRegisterRedux } from "../redux/actions/userAction";
 
 function Register(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [retypePassword, setRetypePassword] = useState("");
-    const [loading, setLoading] = useState(false);
     const history = useHistory();
-    useEffect(() => {
-        let token = localStorage.getItem("token");
-        if (token) {
-            history.push("/")
-        }
-    }, [])
-    const handlRegister = async () => {
-        if (!email || !password || !retypePassword) {
-            toast.error('Email/Password/RetypePassword wrong!');
-            return;
-        }
-        setLoading(true);
-        let res = await registerApi(email, password);
-        if (res && res.token) {
+    const account = useSelector(state => state.user.account);
+    const isLoading = useSelector(state => state.user.isLoading);
+    const dispatch = useDispatch();
 
-            toast.success("Register succeed!");
-            history.push("/")
-        } else {
-            toast.error(res.data);
+    useEffect(() => {
+        if (account && account.auth === true) {
+            history.push("/");
         }
-        setLoading(false);
+    }, [account])
+    const handlRegister = async () => {
+        dispatch(handleRegisterRedux(email, password));
     }
     const handleGoBack = () => {
         history.push("/")
@@ -40,7 +31,7 @@ function Register(props) {
                 <div className="title">Log in</div>
                 <div className="text">Email</div>
                 <input
-                    type="text"
+                    type="email"
                     placeholder="Email..."
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
@@ -62,11 +53,11 @@ function Register(props) {
                         email && password && password === retypePassword ? "active" : ""
                     }
                     disabled={
-                        email && password && password === retypePassword && !loading ? false : true
+                        email && password && password === retypePassword && !isLoading ? false : true
                     }
                     onClick={() => handlRegister()}
                 >
-                    {loading && <i class="fas fa-cog fa-spin"></i>}
+                    {isLoading && <i class="fas fa-cog fa-spin"></i>}
                     Login
                 </button>
                 <div className="back" onClick={() => handleGoBack()}>
