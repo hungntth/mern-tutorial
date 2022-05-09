@@ -36,7 +36,7 @@ function TableUser(props) {
 
     };
     const handleUpdateTable = () => {
-        getUsers(1);
+        getUsers(page, sortField, keyword);
     };
     const handlePageClick = (event) => {
         getUsers(+event.selected + 1, sortField);
